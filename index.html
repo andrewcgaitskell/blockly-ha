@@ -1,1 +1,30 @@
-<!doctype html><head><meta charset=utf-8><title>Blockly Sample App</title><script defer src=bundle.js></script></head><body><div id=pageContainer><div id=outputPane><pre id=generatedCode><code></code></pre><div id=output></div></div><div id=blocklyDiv></div></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockly Home Assistant App</title>
+  
+  <!-- 1. Load your custom blocks first -->
+  <script defer src="custom_blocks.js"></script>
+  
+  <!-- 2. Load the main application logic bundle -->
+  <script defer src="bundle.js"></script>
+</head>
+<body>
+
+  <div id="pageContainer">
+    
+    <div id="outputPane">
+      <pre id="generatedCode"><code></code></pre>
+      <div id="output"></div>
+    </div>
+    
+    <!-- The visual Blockly workspace area -->
+    <div id="blocklyDiv"></div>
+    
+  </div>
+
+</body>
+</html>
+
