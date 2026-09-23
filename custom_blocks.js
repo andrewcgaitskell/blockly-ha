@@ -1,41 +1,68 @@
-// 1. Define what the block looks like
-Blockly.common.defineBlocksWithJSONArray([
-  {
-    "type": "my_simple_block",
-    "message0": "Simple Drag & Drop Block",
-    "previousStatement": null,
-    "nextStatement": null,
-    "colour": 120
+// A self-checking loop that waits until Blockly is fully loaded into memory
+const checkBlockly = setInterval(() => {
+  // Try to find Blockly globally (either window.Blockly or directly)
+  const blocklyInstance = window.Blockly || Blockly;
+  
+  if (blocklyInstance) {
+    clearInterval(checkBlockly); // Stop checking once found
+    initializeCustomBlocks(blocklyInstance);
   }
-]);
+}, 50); // Checks every 50ms
 
-// 2. Define what code it generates (even if it's just a blank line)
-Blockly.JavaScript['my_simple_block'] = function(block) {
-  return "// Simple block dropped\n";
-};
-
-// 3. Inject it straight into the sidebar menu automatically
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const workspace = Blockly.getMainWorkspace();
-    if (!workspace) return;
-
-    // Grab the existing sidebar structure from memory
-    const toolbox = workspace.getOptions().languageTree;
-    
-    if (toolbox && toolbox.contents) {
-      // Append your new block straight to the end of the existing list
-      toolbox.contents.push({
-        "kind": "category",
-        "name": "Custom Blocks",
-        "contents": [
-          { "kind": "block", "type": "my_simple_block" }
-        ]
-      });
-
-      // Force the sidebar menu UI to re-render
-      workspace.updateToolbox(toolbox);
+function initializeCustomBlocks(Blockly) {
+  
+  // 1. Natively define your block's behavior using the fallback method
+  Blockly.Blocks['my_simple_block'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Simple Drag & Drop Block");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(120);
+      this.setTooltip("");
+      this.setHelpUrl("");
     }
-  }, 100); // 100ms delay lets bundle.js finish loading first
-});
+  };
+
+  // 2. Attach your code generator
+  if (Blockly.JavaScript) {
+    Blockly.JavaScript['my_simple_block'] = function(block) {
+      return "// Simple block dropped\n";
+    };
+  }
+
+  // 3. Inject it straight into the live active UI workspace
+  const checkWorkspace = setInterval(() => {
+    const workspace = Blockly.getMainWorkspace();
+    if (workspace) {
+      clearInterval(checkWorkspace);
+
+      // Extract the existing sidebar toolbox layout configuration
+      const toolbox = workspace.getOptions().languageTree;
+      
+      if (toolbox && toolbox.contents) {
+        // Look to see if "Custom Blocks" category already exists
+        let customCategory = toolbox.contents.find(c => c.name === "Custom Blocks");
+        
+        if (!customCategory) {
+          customCategory = {
+            "kind": "category",
+            "name": "Custom Blocks",
+            "contents": []
+          };
+          toolbox.contents.push(customCategory);
+        }
+
+        // Drop your custom block straight inside the category list
+        customCategory.contents.push({
+          "kind": "block",
+          "type": "my_simple_block"
+        });
+
+        // Push the updated toolbox array configuration straight back to the live editor UI
+        workspace.updateToolbox(toolbox);
+      }
+    }
+  }, 50);
+}
 
