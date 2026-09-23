@@ -1,0 +1,17 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Safe backups of old compiler scraps (just in case they are still lingering)
+node_modules/
+package-lock.json
+bundle.js
+bundle.js.LICENSE.txt
+
+# Log files and crash summaries
+*.log
+npm-debug.log*
+
+# Secret tokens or environment files (if you decide to save Home Assistant API keys locally later)
+.env
+secret.json
