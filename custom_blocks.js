@@ -1,5 +1,5 @@
 // Define the visual layout of your block
-Blockly.common.defineBlocksWithJSONArray([
+Blockly.common.defineBlocksWithJsonArray([
   {
     "type": "my_simple_block",
     "message0": "Simple Drag & Drop Block",
