@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blockly Home Assistant App</title>
+  <title>Blockly Sample App</title>
   
-  <!-- 1. Load your custom blocks first -->
+  <!-- 1. The Global Trap: Expose Webpack's internal Blockly -->
+  <script>
+    Object.defineProperty(window, 'Blockly', {
+      configurable: true,
+      set: function(val) {
+        window._BlocklyInstance = val;
+        // Run our custom blocks setup immediately when Blockly arrives
+        if (typeof window.setupMyBlocks === 'function') {
+          window.setupMyBlocks(val);
+        }
+      },
+      get: function() {
+        return window._BlocklyInstance;
+      }
+    });
+  </script>
+
+  <!-- 2. Load your custom blocks file -->
   <script defer src="custom_blocks.js"></script>
-  
-  <!-- 2. Load the main application logic bundle -->
+
+  <!-- 3. Load the Webpack bundle -->
   <script defer src="bundle.js"></script>
 </head>
 <body>
-
   <div id="pageContainer">
-    
-    <div id="outputPane">
-      <pre id="generatedCode"><code></code></pre>
-      <div id="output"></div>
-    </div>
-    
-    <!-- The visual Blockly workspace area -->
+    <div id="outputPane"><pre id="generatedCode"><code></code></pre><div id="output"></div></div>
     <div id="blocklyDiv"></div>
-    
   </div>
-
 </body>
 </html>
+
 
