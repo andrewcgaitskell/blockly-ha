@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Custom Blockly Workspace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="pageContainer">
+    <div id="outputPane">
+      <button id="runButton">Run</button>
+      <pre id="generatedCode"><code id="codeArea"></code></pre>
+      <div id="output"></div>
+    </div>
+    <div id="blocklyDiv"></div>
+  </div>
+
+  <!-- Order matters: each file uses things defined by the files above it -->
+  <script src="blockly/blockly.min.js"></script>  <!-- Blockly: core + blocks + English + JS generator -->
+  <script src="custom_blocks.js"></script>        <!-- block shapes + generators -->
+  <script src="robot.js"></script>                <!-- what forward() and turn() do -->
+  <script src="toolbox.js"></script>              <!-- the block menu -->
+  <script src="app.js"></script>                  <!-- workspace + live code panel -->
+  <script src="run.js"></script>                  <!-- the Run button -->
+
+</body>
+</html>
