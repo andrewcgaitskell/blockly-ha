@@ -9,6 +9,15 @@
 
   <div id="pageContainer">
     <div id="outputPane">
+      <div id="programBar">
+        <select id="programSelect"><option value="">- saved programs -</option></select>
+        <button id="newBtn">New</button>
+        <button id="saveBtn">Save</button>
+        <button id="deleteBtn">Delete</button>
+        <button id="exportBtn">Export</button>
+        <button id="importBtn">Import</button>
+        <input type="file" id="importFile" accept=".json" hidden>
+      </div>
       <button id="runButton">Run</button>
       <pre id="generatedCode"><code id="codeArea"></code></pre>
       <div id="output"></div>
@@ -23,6 +32,7 @@
   <script src="toolbox.js"></script>              <!-- the block menu -->
   <script src="app.js"></script>                  <!-- workspace + live code panel -->
   <script src="run.js"></script>                  <!-- the Run button -->
+  <script src="programs.js"></script>             <!-- save / open / delete / export / import -->
 
 </body>
 </html>
